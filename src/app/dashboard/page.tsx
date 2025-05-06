@@ -1,3 +1,5 @@
+'use client';
+
 import AdvancedTokenAnalytics from '../components/AdvancedTokenAnalytics'
 import SwapSuggestions from '../components/SwapSuggestions'
 import PredictiveTrends from '../components/PredictiveTrends'
