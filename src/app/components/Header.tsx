@@ -1,13 +1,33 @@
 'use client' // Required for hooks and interactivity
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import React from 'react';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import CoinSearch from './CoinSearch';
 
 export default function Header() {
   const pathname = usePathname() // Correct hook for App Router
 
   // Navigation items configuration
+  const [isSearchVisible, setIsSearchVisible] = React.useState(false);
+
+  const toggleSearchVisibility = () => {
+    setIsSearchVisible(!isSearchVisible);
+  };
+
   const navItems = [
+    {
+      name: 'Search',
+      href: '#',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      ),
+      onClick: toggleSearchVisibility,
+      hoverColor: 'hover:text-gray-300'
+    },
     {
       name: 'Home',
       href: '/',
@@ -74,22 +94,39 @@ export default function Header() {
           {/* Navigation with active state indicators */}
           <nav className="flex items-center space-x-1 md:space-x-2">
             {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-300 flex items-center ${
-                  pathname === item.href
-                    ? 'bg-gray-700/50 text-white'
-                    : 'text-gray-300 hover:bg-gray-700/30 ' + item.hoverColor
-                }`}
-                aria-current={pathname === item.href ? 'page' : undefined}
-              >
-                {item.icon}
-                <span className="hidden sm:inline">{item.name}</span>
-              </Link>
+              item.href ? (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-300 flex items-center ${
+                    pathname === item.href
+                      ? 'bg-gray-700/50 text-white'
+                      : 'text-gray-300 hover:bg-gray-700/30 ' + item.hoverColor
+                  }`}
+                  aria-current={pathname === item.href ? 'page' : undefined}
+                >
+                  {item.icon}
+                  <span className="hidden sm:inline">{item.name}</span>
+                </Link>
+              ) : (
+                <button
+                  key={item.name}
+                  onClick={item.onClick}
+                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-300 flex items-center text-gray-300 hover:bg-gray-700/30 ${item.hoverColor}`}
+                >
+                  {item.icon}
+                  <span className="hidden sm:inline">{item.name}</span>
+                </button>
+              )
             ))}
           </nav>
         </div>
+        {/* Search Input */}
+        {isSearchVisible && (
+          <div className="container mx-auto px-4 py-2">
+            <CoinSearch />
+          </div>
+        )}
       </div>
     </header>
   )
