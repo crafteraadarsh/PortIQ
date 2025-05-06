@@ -2,7 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  output: 'standalone'
+  output: 'standalone',
+  transpilePackages: ['recharts']
 };
 
 module.exports = nextConfig; 
