@@ -1,20 +1,50 @@
-'use client' // Required for hooks and interactivity
+'use client';
 
-import React from 'react';
-
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import CoinSearch from './CoinSearch';
+import { ethers } from 'ethers';
 
 export default function Header() {
-  const pathname = usePathname() // Correct hook for App Router
-
-  // Navigation items configuration
+  const pathname = usePathname();
   const [isSearchVisible, setIsSearchVisible] = React.useState(false);
+  const [account, setAccount] = useState<string | null>(null);
 
   const toggleSearchVisibility = () => {
     setIsSearchVisible(!isSearchVisible);
   };
+
+  const connectWallet = async () => {
+    if (typeof window.ethereum !== 'undefined') {
+      try {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const signer = await provider.getSigner();
+        const address = await signer.getAddress();
+        setAccount(address);
+        console.log("MetaMask Connected:", address);
+      } catch (error) {
+        console.error("MetaMask Connection Error:", error);
+      }
+    } else {
+      console.log('Please install MetaMask!');
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window.ethereum !== 'undefined') {
+      window.ethereum.on('accountsChanged', async (accounts: string[]) => {
+        if (accounts.length > 0) {
+          setAccount(accounts[0]);
+          console.log("MetaMask Account Changed:", accounts[0]);
+        } else {
+          setAccount(null);
+          console.log("MetaMask Disconnected");
+        }
+      });
+    }
+  }, []);
 
   const navItems = [
     {
@@ -69,8 +99,7 @@ export default function Header() {
       ),
       hoverColor: 'hover:text-purple-300'
     }
-    
-  ]
+  ];
 
   return (
     <header className="sticky top-0 z-50 bg-gradient-to-r from-gray-900 to-gray-800 text-white shadow-lg backdrop-blur-sm">
@@ -119,6 +148,12 @@ export default function Header() {
               )
             ))}
           </nav>
+          <button
+            onClick={connectWallet}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            {account ? `${account.substring(0, 6)}...${account.substring(account.length - 4)}` : 'Connect Wallet'}
+          </button>
         </div>
         {/* Search Input */}
         {isSearchVisible && (
@@ -128,5 +163,5 @@ export default function Header() {
         )}
       </div>
     </header>
-  )
+  );
 }
