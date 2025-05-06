@@ -1,62 +1,13 @@
-'use client';
+'use client' // Required for hooks and interactivity
 
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import CoinSearch from './CoinSearch';
-import { ethers } from 'ethers';
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export default function Header() {
-  const pathname = usePathname();
-  const [isSearchVisible, setIsSearchVisible] = React.useState(false);
-  const [account, setAccount] = useState<string | null>(null);
+  const pathname = usePathname() // Correct hook for App Router
 
-  const toggleSearchVisibility = () => {
-    setIsSearchVisible(!isSearchVisible);
-  };
-
-  const connectWallet = async () => {
-    if (typeof window.ethereum !== 'undefined') {
-      try {
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const signer = await provider.getSigner();
-        const address = await signer.getAddress();
-        setAccount(address);
-        console.log("MetaMask Connected:", address);
-      } catch (error) {
-        console.error("MetaMask Connection Error:", error);
-      }
-    } else {
-      console.log('Please install MetaMask!');
-    }
-  };
-
-  useEffect(() => {
-    if (typeof window.ethereum !== 'undefined') {
-      window.ethereum.on('accountsChanged', async (accounts: string[]) => {
-        if (accounts.length > 0) {
-          setAccount(accounts[0]);
-          console.log("MetaMask Account Changed:", accounts[0]);
-        } else {
-          setAccount(null);
-          console.log("MetaMask Disconnected");
-        }
-      });
-    }
-  }, []);
-
+  // Navigation items configuration
   const navItems = [
-    {
-      name: 'Search',
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
-      ),
-      onClick: toggleSearchVisibility,
-      hoverColor: 'hover:text-gray-300'
-    },
     {
       name: 'Home',
       href: '/',
@@ -99,7 +50,8 @@ export default function Header() {
       ),
       hoverColor: 'hover:text-purple-300'
     }
-  ];
+    
+  ]
 
   return (
     <header className="sticky top-0 z-50 bg-gradient-to-r from-gray-900 to-gray-800 text-white shadow-lg backdrop-blur-sm">
@@ -122,46 +74,23 @@ export default function Header() {
           {/* Navigation with active state indicators */}
           <nav className="flex items-center space-x-1 md:space-x-2">
             {navItems.map((item) => (
-              item.href ? (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-300 flex items-center ${
-                    pathname === item.href
-                      ? 'bg-gray-700/50 text-white'
-                      : 'text-gray-300 hover:bg-gray-700/30 ' + item.hoverColor
-                  }`}
-                  aria-current={pathname === item.href ? 'page' : undefined}
-                >
-                  {item.icon}
-                  <span className="hidden sm:inline">{item.name}</span>
-                </Link>
-              ) : (
-                <button
-                  key={item.name}
-                  onClick={item.onClick}
-                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-300 flex items-center text-gray-300 hover:bg-gray-700/30 ${item.hoverColor}`}
-                >
-                  {item.icon}
-                  <span className="hidden sm:inline">{item.name}</span>
-                </button>
-              )
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-300 flex items-center ${
+                  pathname === item.href
+                    ? 'bg-gray-700/50 text-white'
+                    : 'text-gray-300 hover:bg-gray-700/30 ' + item.hoverColor
+                }`}
+                aria-current={pathname === item.href ? 'page' : undefined}
+              >
+                {item.icon}
+                <span className="hidden sm:inline">{item.name}</span>
+              </Link>
             ))}
           </nav>
-          <button
-            onClick={connectWallet}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            {account ? `${account.substring(0, 6)}...${account.substring(account.length - 4)}` : 'Connect Wallet'}
-          </button>
         </div>
-        {/* Search Input */}
-        {isSearchVisible && (
-          <div className="container mx-auto px-4 py-2">
-            <CoinSearch />
-          </div>
-        )}
       </div>
     </header>
-  );
+  )
 }

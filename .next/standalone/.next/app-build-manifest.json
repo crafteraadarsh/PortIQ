@@ -1,0 +1,52 @@
+{
+  "pages": {
+    "/_not-found/page": [
+      "static/chunks/webpack-612a59bf7f5b24fd.js",
+      "static/chunks/fd9d1056-ec7bba3dc2410516.js",
+      "static/chunks/117-db3ff2aaaac0c094.js",
+      "static/chunks/main-app-4c66c0da9da29e19.js",
+      "static/chunks/app/_not-found/page-a399f9cd3fdc3743.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack-612a59bf7f5b24fd.js",
+      "static/chunks/fd9d1056-ec7bba3dc2410516.js",
+      "static/chunks/117-db3ff2aaaac0c094.js",
+      "static/chunks/main-app-4c66c0da9da29e19.js",
+      "static/css/261d46f1d8be5a80.css",
+      "static/chunks/67-4be99f5aa8804360.js",
+      "static/chunks/448-ea2306c856f5492e.js",
+      "static/chunks/app/layout-2dc626d07f0543c7.js"
+    ],
+    "/compare/page": [
+      "static/chunks/webpack-612a59bf7f5b24fd.js",
+      "static/chunks/fd9d1056-ec7bba3dc2410516.js",
+      "static/chunks/117-db3ff2aaaac0c094.js",
+      "static/chunks/main-app-4c66c0da9da29e19.js",
+      "static/chunks/275-79b76c7bfcb804b8.js",
+      "static/chunks/app/compare/page-a3c285c1690a5ad3.js"
+    ],
+    "/dashboard/page": [
+      "static/chunks/webpack-612a59bf7f5b24fd.js",
+      "static/chunks/fd9d1056-ec7bba3dc2410516.js",
+      "static/chunks/117-db3ff2aaaac0c094.js",
+      "static/chunks/main-app-4c66c0da9da29e19.js",
+      "static/chunks/275-79b76c7bfcb804b8.js",
+      "static/chunks/app/dashboard/page-2a1901315b796074.js"
+    ],
+    "/page": [
+      "static/chunks/webpack-612a59bf7f5b24fd.js",
+      "static/chunks/fd9d1056-ec7bba3dc2410516.js",
+      "static/chunks/117-db3ff2aaaac0c094.js",
+      "static/chunks/main-app-4c66c0da9da29e19.js",
+      "static/chunks/67-4be99f5aa8804360.js",
+      "static/chunks/app/page-179465afb51067f8.js"
+    ],
+    "/portfolio/page": [
+      "static/chunks/webpack-612a59bf7f5b24fd.js",
+      "static/chunks/fd9d1056-ec7bba3dc2410516.js",
+      "static/chunks/117-db3ff2aaaac0c094.js",
+      "static/chunks/main-app-4c66c0da9da29e19.js",
+      "static/chunks/app/portfolio/page-05d467d454dff243.js"
+    ]
+  }
+}
