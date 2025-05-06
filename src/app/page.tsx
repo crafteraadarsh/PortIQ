@@ -1,16 +1,9 @@
-"use client";
-
-import React from 'react';
-import Index from './pages/index'
-
+import HomePage from './components/HomePage';
 
 export default function Home() {
   return (
     <div>
-      <Index />
-      <main className="flex items-center justify-center min-h-screen text-xl font-medium">
-      
-      </main>
+      <HomePage />
     </div>
   );
 }
